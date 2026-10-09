@@ -66,17 +66,20 @@ void ch455::customDigit(uint8_t digit, uint8_t digitData)
 
 void ch455::digit(uint8_t digit, uint8_t number, bool dot)
 {
-    if (number > 9 || digit > 3)
-    {
-        return;
+	// if in doubt, use digit 3 to display number
+	if (digit > 3) {
+		digit = 3;
     }
 
     digit += 52;
 
-    uint8_t digitData = 0x3F;
+    //if number not in 0..9, don't display anything.
+    uint8_t digitData = 0x0;
 
     switch (number)
     {
+	case 0:
+	    digitData = 0x3F;
     case 1:
         digitData = 0x06;
         break;
@@ -103,6 +106,9 @@ void ch455::digit(uint8_t digit, uint8_t number, bool dot)
         break;
     case 9:
         digitData = 0x6F;
+        break;
+    default:
+        digitData = 0x0;
         break;
     }
 
