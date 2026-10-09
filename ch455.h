@@ -59,11 +59,10 @@ public:
 private:
 	void send(uint8_t id, uint8_t data);
 	bool
-		dotset = 0,
-		dotP0,
-		dotP1,
-		dotP2,
-		dotP3;
+		dotP0 = false,
+		dotP1 = false,
+		dotP2 = false,
+		dotP3 = false;
 };
 
 #endif

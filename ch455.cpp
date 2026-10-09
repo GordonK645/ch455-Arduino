@@ -115,10 +115,6 @@ void ch455::showWithDots(uint8_t digit0, bool dot0, uint8_t digit1, bool dot1, u
 
 void ch455::show(uint8_t digit0, uint8_t digit1, uint8_t digit2, uint8_t digit3)
 {
-    if (!dotset)
-    {
-        return;
-    }
     digit(0, digit0, dotP0);
     digit(1, digit1, dotP1);
     digit(2, digit2, dotP2);
@@ -131,5 +127,4 @@ void ch455::dotPosition(bool dot0, bool dot1, bool dot2, bool dot3)
     dotP1 = dot1;
     dotP2 = dot2;
     dotP3 = dot3;
-    dotset = 1;
 }
