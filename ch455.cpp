@@ -31,7 +31,7 @@ ch455::ch455(TwoWire& i2c)  :
 
 uint8_t ch455::readKeyboard()
 {
-    twoWire->requestFrom(0x4f, 1);
+    twoWire->requestFrom(0x27, 1);
     return twoWire->read();
 }
 
