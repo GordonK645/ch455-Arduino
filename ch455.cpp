@@ -1,11 +1,11 @@
 #include "ch455.h"
-#include "Wire.h"
+#include "Arduino.h"
 
 void ch455::send(uint8_t id, uint8_t data)
 {
-    Wire.beginTransmission(id);
-    Wire.write(data);
-    Wire.endTransmission();
+    twoWire->beginTransmission(id);
+    twoWire->write(data);
+    twoWire->endTransmission();
 }
 
 void ch455::configure(uint8_t brightness, bool enabled, bool sleep, bool sevenSegment)
@@ -25,24 +25,14 @@ void ch455::configure(uint8_t brightness, bool enabled, bool sleep, bool sevenSe
     send(36, brightness);
 }
 
-ch455::ch455() {}
-
-void ch455::begin(uint8_t brightness, bool enabled, bool sleep, bool sevenSegment)
-{
-    Wire.begin();
-    ch455::configure(brightness);
-}
-
-void ch455::begin(uint8_t sda, uint8_t scl, uint8_t brightness, bool enabled, bool sleep, bool sevenSegment)
-{
-    Wire.begin(sda, scl);
-    ch455::configure(brightness);
+ch455::ch455(TwoWire& i2c)  :
+  twoWire(&i2c) {
 }
 
 uint8_t ch455::readKeyboard()
 {
-    Wire.requestFrom(0x4f, 1);
-    return Wire.read();
+    twoWire->requestFrom(0x4f, 1);
+    return twoWire->read();
 }
 
 void ch455::customDigit(uint8_t digit, bool seg0, bool seg1, bool seg2, bool seg3, bool seg4, bool seg5, bool seg6, bool seg7)
