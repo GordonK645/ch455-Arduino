@@ -63,7 +63,6 @@ void ch455::digit(uint8_t digit, uint8_t number, bool dot)
 {
     if (number > 9 || digit > 3)
     {
-        Serial.println("CH455 Library: Number or digit is too big, max 9 for number and max 3 for digit");
         return;
     }
 
@@ -118,7 +117,6 @@ void ch455::show(uint8_t digit0, uint8_t digit1, uint8_t digit2, uint8_t digit3)
 {
     if (!dotset)
     {
-        Serial.println("CH455 Library: Please set dot position first.");
         return;
     }
     digit(0, digit0, dotP0);
