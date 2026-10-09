@@ -10,17 +10,22 @@ void ch455::send(uint8_t id, uint8_t data)
 
 void ch455::configure(uint8_t brightness, bool enabled, bool sleep, bool sevenSegment)
 {
-    if (brightness > 8)
-        brightness = 8;
-    else if (brightness < 1)
-        brightness = 1;
+	// brightness value is between 1 and 7 and "full bightness" is 0
+    if (brightness > 7) {
+        brightness = 0;
+	}
+    else if (brightness < 1) {
+        brightness = 0;
+	}
 
-    if (brightness < 8)
-        brightness = (16 * brightness);
-
-    bitWrite(brightness, 0, enabled);
-    bitWrite(brightness, 2, sleep);
+	// put system parameter values into the right position for sending:
+	// we do reuse the variable 'brightness' and bitpositions are according
+	// to the manual:
+	// [KOFF][brightness (3bit)][sevenSegment][sleep]0[enabled] (bits 7..0)
+    brightness = brightness << 4;
     bitWrite(brightness, 3, sevenSegment);
+    bitWrite(brightness, 2, sleep);
+    bitWrite(brightness, 0, enabled);
 
     send(36, brightness);
 }
